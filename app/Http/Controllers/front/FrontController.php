@@ -4,8 +4,10 @@ namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Message_Trait;
+use App\Models\admin\HomePageControlle;
 use App\Models\admin\Service;
 use App\Models\admin\Setting;
+use App\Models\admin\Testmonail;
 use App\Models\front\Booking;
 use App\Models\front\Contact;
 use Illuminate\Http\Request;
@@ -22,7 +24,9 @@ class FrontController extends Controller
     {
 
         $services = Service::all();
-        return view('front.index', compact('services'));
+        $testmonails = Testmonail::all();
+        $homedata = HomePageControlle::first();
+        return view('front.index', compact('services','testmonails','homedata'));
     }
 
     public function services()

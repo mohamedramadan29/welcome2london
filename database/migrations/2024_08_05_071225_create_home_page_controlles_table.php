@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('home_page_controlles', function (Blueprint $table) {
             $table->id();
+            $table->string('hero_first_title');
+            $table->string('hero_second_title');
+            $table->string('hero_desc');
+            $table->string('hero_phone');
+            $table->string('hero_image1');
+            $table->string('hero_image2');
+            $table->string('hero_image3');
+            $table->string('about_image');
+            $table->string('about_title');
+            $table->string('about_desc');
+            $table->string('about_feature1');
+            $table->string('about_feature2');
+            $table->string('about_feature3');
+            $table->string('about_feature4');
             $table->timestamps();
         });
     }

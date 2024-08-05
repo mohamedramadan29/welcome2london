@@ -5,6 +5,7 @@ use \App\Http\Controllers\admin\AdminController;
 use \App\Http\Controllers\admin\ServiceController;
 use \App\Http\Controllers\admin\BookingController;
 use \App\Http\Controllers\front\ServiceBookingContoller;
+use \App\Http\Controllers\admin\TestmonailController;
 Route::get('/admin', [AdminController::class, 'index'])->name('login');
 Route::group(['prefix' => 'admin'], function () {
     // Admin Login
@@ -49,15 +50,24 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('bookingservices/delete/{id}','delete');
         });
 
+        ////////////////////// Start Testmonails //////////////
+        ///
+        Route::controller(TestmonailController::class)->group(function (){
+            Route::get('testmonails','index');
+            Route::match(['post','get'],'testmonail/add','add');
+            Route::match(['post','get'],'testmonail/update/{id}','update');
+            Route::post('testmonail/delete/{id}','delete');
+        });
+
+        ///////////// start Home Page Controller
+        ///
+        Route::controller(\App\Http\Controllers\admin\HomePageController::class)->group(function (){
+
+            Route::match(['post','get'],'homepage/update','update');
 
 
 
-
-
-
-
-
-
+        });
 
         //////////////////////////// Start Faqs /////////////////
         ///

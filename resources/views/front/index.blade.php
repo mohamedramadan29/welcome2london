@@ -5,22 +5,17 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="home2-banner-wrapper"
-                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{'assets/front/img/home2/home2-banner-img1.jpg'}});">
+                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{asset('assets/admin/uploads/homepage/'.$homedata['hero_image1'])}});">
                     </div>
                 </div>
                 <div class="swiper-slide">
                     <div class="home2-banner-wrapper"
-                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{'assets/front/img/home2/home2-banner-img2.jpg'}});">
+                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{asset('assets/admin/uploads/homepage/'.$homedata['hero_image2'])}});">
                     </div>
                 </div>
                 <div class="swiper-slide">
                     <div class="home2-banner-wrapper"
-                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{'assets/front/img/home2/home2-banner-img3.jpg'}});">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="home2-banner-wrapper"
-                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{'assets/front/img/home2/home2-banner-img4.jpg'}});">
+                         style="background-image: linear-gradient(180deg, rgba(16, 12, 8, 0.4) 0%, rgba(16, 12, 8, 0.4) 100%), url({{asset('assets/admin/uploads/homepage/'.$homedata['hero_image3'])}});">
                     </div>
                 </div>
             </div>
@@ -31,18 +26,16 @@
                     <div class="col-lg-12">
                         <div class="home2-banner-content">
                             <div class="eg-tag">
-                                <span> Welcome2London </span>
+                                <span> {{$homedata['hero_first_title']}} </span>
                             </div>
-                            <h1 class="animate-text"> شركة هلال للسياحة في لندن </h1>
-                            <p> أو كما يسميها البعض شركة المشاهير هي احد شركات السياحة المتميزة والمتخصصة في لندن
-
-                                حيث تجمع مابين المعاملة الراقية والأسعار التنافسية لزيارة لاماكن السياحية في لندن </p>
+                            <h1 class="animate-text"> {{$homedata['hero_second_title']}}  </h1>
+                            <p>  {{$homedata['hero_desc']}} </p>
 
                             <div class="banner-content-bottom">
                                 <div class="hotline-area">
                                     <div class="content">
                                         <span> للتواصل معنا  </span>
-                                        <h6><a href="tel:+990737621432">+ 01011642731 </a></h6>
+                                        <h6><a href="tel:{{$homedata['hero_phone']}}"> {{$homedata['hero_phone']}} </a></h6>
                                     </div>
                                 </div>
 
@@ -75,10 +68,9 @@
                             <div class="eg-section-tag">
                                 <span> عن الشركة  </span>
                             </div>
-                            <h2> نحن نقدم أفضل المرافق السياحية. </h2>
+                            <h2> {{$homedata['about_title']}} </h2>
                             <p>
-                                أو كما يسميها البعض شركة المشاهير هي احد شركات السياحة المتميزة والمتخصصة في لندن حيث
-                                تجمع مابين المعاملة الراقية والأسعار التنافسية لزيارة لاماكن السياحية في لندن
+                              {{$homedata['about_desc']}}
                             </p>
                         </div>
                         <div class="row g-4 mb-50">
@@ -88,7 +80,7 @@
                                         <img src="{{asset('assets/front/img/home2/icon/facility-card-icon1.svg')}}" alt>
                                     </div>
                                     <div class="content">
-                                        <h6> السلامة أولاً <br>دائما </h6>
+                                        <h6> {{$homedata['about_feature1']}} </h6>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +90,7 @@
                                         <img src="{{asset('assets/front/img/home2/icon/facility-card-icon2.svg')}}" alt>
                                     </div>
                                     <div class="content">
-                                        <h6> دليل السفر <br> الموثوق </h6>
+                                        <h6>   {{$homedata['about_feature2']}} </h6>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +100,7 @@
                                         <img src="{{asset('assets/front/img/home2/icon/facility-card-icon3.svg')}}" alt>
                                     </div>
                                     <div class="content">
-                                        <h6>  الخبرة و   <br> التجربة   </h6>
+                                        <h6>  {{$homedata['about_feature3']}}   </h6>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +110,7 @@
                                         <img src="{{asset('assets/front/img/home2/icon/facility-card-icon3.svg')}}" alt>
                                     </div>
                                     <div class="content">
-                                        <h6>  الخبرة و   <br> التجربة   </h6>
+                                        <h6>   {{$homedata['about_feature4']}}  </h6>
                                     </div>
                                 </div>
                             </div>
@@ -129,12 +121,9 @@
                 <div class="col-lg-6 d-flex align-items-center">
                     <div class="about-img-wrap">
                         <div class="about-img">
-                            <img src="{{asset('assets/front/img/home2/home2-about-img1.png')}}" alt class="about-img">
+                            <img src="{{asset('assets/admin/uploads/homepage/'.$homedata['about_image'])}}" alt class="about-img">
                         </div>
-                        <div class="experience">
-                            <h3>05</h3>
-                            <p> سنوات من الخبرة  </p>
-                        </div>
+
                         <img src="{{asset('assets/front/img/home2/vector/plane-vector.svg')}}" alt class="vector">
                     </div>
                 </div>
@@ -373,126 +362,39 @@
                             <div class="col-lg-12">
                                 <div class="swiper home2-testimonial-card-slider mb-35">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="tesimonial-card-wrapper style-2">
-                                                <div class="tesimonial-card">
-                                                    <img src="assets/img/home2/vector/testi-quote.svg" alt
-                                                         class="quote">
-                                                    <div class="testimonial-content">
-                                                        <p>“ لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه … بروشور او فلاير على سبيل المثال … او نماذج مواقع انترنت … ”</p>
+                                        @foreach($testmonails as $testmon)
+                                            <div class="swiper-slide">
+                                                <div class="tesimonial-card-wrapper style-2">
+                                                    <div class="tesimonial-card">
+                                                        <img src="assets/img/home2/vector/testi-quote.svg" alt
+                                                             class="quote">
+                                                        <div class="testimonial-content">
+                                                            <p>  {{$testmon['person_desc']}} </p>
+                                                        </div>
+                                                        <div class="testimonial-bottom">
+                                                            <div class="rating-area">
+                                                                <ul class="rating">
+                                                                    <li><i class="bi bi-star-fill"></i></li>
+                                                                    <li><i class="bi bi-star-fill"></i></li>
+                                                                    <li><i class="bi bi-star-fill"></i></li>
+                                                                    <li><i class="bi bi-star-fill"></i></li>
+                                                                    <li><i class="bi bi-star-fill"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="testimonial-bottom">
-                                                        <div class="rating-area">
-                                                            <ul class="rating">
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                            </ul>
+                                                    <div class="author-area">
+                                                        <div class="author-img">
+                                                            <img src="{{asset('assets/admin/uploads/testmonails/'.$testmon['person_image'])}}" alt>
+                                                        </div>
+                                                        <div class="author-content">
+                                                            <h5>  {{$testmon['person_name']}}  </h5>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="author-area">
-                                                    <div class="author-img">
-                                                        <img src="{{asset('assets/front/img/home1/testi-author-img1.png')}}" alt>
-                                                    </div>
-                                                    <div class="author-content">
-                                                        <h5>  Mohamed Ramadan  </h5>
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="tesimonial-card-wrapper style-2">
-                                                <div class="tesimonial-card">
-                                                    <img src="assets/img/home2/vector/testi-quote.svg" alt
-                                                         class="quote">
-                                                    <div class="testimonial-content">
-                                                        <p>“ لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه … بروشور او فلاير على سبيل المثال … او نماذج مواقع انترنت … ”</p>
-                                                    </div>
-                                                    <div class="testimonial-bottom">
-                                                        <div class="rating-area">
-                                                            <ul class="rating">
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="author-area">
-                                                    <div class="author-img">
-                                                        <img src="{{asset('assets/front/img/home1/testi-author-img1.png')}}" alt>
-                                                    </div>
-                                                    <div class="author-content">
-                                                        <h5>  Mohamed Ramadan  </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="tesimonial-card-wrapper style-2">
-                                                <div class="tesimonial-card">
-                                                    <img src="assets/img/home2/vector/testi-quote.svg" alt
-                                                         class="quote">
-                                                    <div class="testimonial-content">
-                                                        <p>“ لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه … بروشور او فلاير على سبيل المثال … او نماذج مواقع انترنت … ”</p>
-                                                    </div>
-                                                    <div class="testimonial-bottom">
-                                                        <div class="rating-area">
-                                                            <ul class="rating">
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="author-area">
-                                                    <div class="author-img">
-                                                        <img src="{{asset('assets/front/img/home1/testi-author-img1.png')}}" alt>
-                                                    </div>
-                                                    <div class="author-content">
-                                                        <h5>  Mohamed Ramadan  </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="tesimonial-card-wrapper style-2">
-                                                <div class="tesimonial-card">
-                                                    <img src="assets/img/home2/vector/testi-quote.svg" alt
-                                                         class="quote">
-                                                    <div class="testimonial-content">
-                                                        <p>“ لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه … بروشور او فلاير على سبيل المثال … او نماذج مواقع انترنت … ”</p>
-                                                    </div>
-                                                    <div class="testimonial-bottom">
-                                                        <div class="rating-area">
-                                                            <ul class="rating">
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                                <li><i class="bi bi-star-fill"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="author-area">
-                                                    <div class="author-img">
-                                                        <img src="{{asset('assets/front/img/home1/testi-author-img1.png')}}" alt>
-                                                    </div>
-                                                    <div class="author-content">
-                                                        <h5>  Mohamed Ramadan  </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
+
                                     </div>
                                 </div>
                                 <div class="slide-and-view-btn-grp style-3">

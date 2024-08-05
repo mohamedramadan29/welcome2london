@@ -43,6 +43,27 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'testmonails' => [
+            'driver' => 'local',
+            'root' => base_path('assets/admin/uploads/testmonails'), // Use base_path() directly with the path
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'homepage' => [
+            'driver' => 'local',
+            'root' => base_path('assets/admin/uploads/homepage'), // Use base_path() directly with the path
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'services' => [
+            'driver' => 'local',
+            'root' => base_path('assets/admin/uploads/services'), // Use base_path() directly with the path
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
