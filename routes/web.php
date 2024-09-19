@@ -19,12 +19,16 @@ Route::controller(ServiceController::class)->group(function (){
 
 Route::controller(PaypalController::class)->group(function (){
 
-    Route::post('confirm/pay','pay')->name('payment');
-    Route::post('confirm/pay2','pay')->name('payment2');
-    Route::get('success2','success2');
-    Route::get('success','success');
-    Route::get('error','errorPayment');
-    Route::get('error2','errorPayment2');
+//    Route::post('confirm/pay','pay')->name('payment');
+//    Route::post('confirm/pay2','pay')->name('payment2');
+//    Route::get('success2','success2');
+//    Route::get('success','success');
+//    Route::get('error','errorPayment');
+//    Route::get('error2','errorPayment2');
+    Route::get('paypal/create', 'index');
+    Route::get('/create/{amount}', 'create');
+    Route::post('/complete', 'complete');
+
 
 });
 

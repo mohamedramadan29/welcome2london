@@ -78,21 +78,6 @@ class ServiceBookingContoller extends Controller
                 return Redirect::back()->withInput()->withErrors($validator);
             }
             $booking = new ServiveBooking();
-//            $booking->create([
-//                'name' => $data['name'],
-//                'email' => $data['email'],
-//                'phone' => $data['phone'],
-//                'travel_date' => $data['travel_date'],
-//                'travel_time' => $data['travel_time'],
-//                'num_person' => $data['num_person'],
-//                'notes' => $data['notes'],
-//                'user_session' => $session_id,
-//                'travel_price' => $data['travel_price'],
-//                'serv_id' => $data['serv_id'],
-//                'serv_name' => $data['serv_name'],
-//                'num_pages'=>$data['num_pages']
-//            ]);
-
             $booking->name=$data['name'];
             $booking->email=$data['email'];
             $booking->phone=$data['phone'];

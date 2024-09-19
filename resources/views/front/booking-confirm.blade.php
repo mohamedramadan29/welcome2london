@@ -22,11 +22,11 @@
                         @endphp
 
 
-                        <p><span> EUR {{$confirm_price}}  </span> يجب تاكيد الحجز الخاص بك ودفع مبلغ وقدرة </p>
+                        <p><span>  £ {{$confirm_price}}  </span> يجب تاكيد الحجز الخاص بك ودفع مبلغ وقدرة </p>
                         <form method="post" action="{{route('payment')}}">
                             @csrf
                             <div class="form-inner">
-                                <input type="text" required readonly disabled class="form-control" value="{{$confirm_price}}  EU ">
+                                <input type="text" required readonly disabled class="form-control" value="{{$confirm_price}}   £ ">
                             </div>
                             <br>
                             <br>

@@ -3,156 +3,118 @@
 namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use App\Models\admin\Setting;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 use App\Models\front\Booking;
 use App\Models\front\Payment;
-use App\Models\front\Payment2;
-use App\Models\front\ServiveBooking;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Omnipay\Omnipay;
-
 class PaypalController extends Controller
 {
-    private $geteway;
-
-    public function __construct()
+    public function index()
     {
-
-
-        $this->geteway = Omnipay::create('PayPal_Rest');
-        $this->geteway->setClientId(env('PAYPAL_CLIENT_ID'));
-        $this->geteway->setSecret(env('PAYPAL_CLIENT_SECRET'));
-        $this->geteway->setTestMode(true);
+        return view('front.checkout');
     }
-
-    public function pay(Request $request)
+    private function getAccessToken(): string
     {
-        $setting = Setting::find(1);
-        $confirm_price = $setting->main_price;
-        try {
-            $paypal_amount = round($confirm_price, '2');
-            $response = $this->geteway->purchase(array(
-                'amount' => $paypal_amount,
-                'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => url('success'),
-                'cancelUrl' => url('error'),
-            ))->send();
-            if ($response->isRedirect()) {
-                $response->redirect();
-            } else {
-                return $response->getMessage();
-            }
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
+        $headers = [
+            'Content-Type'  => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Basic ' . base64_encode(config('paypal.client_id') . ':' . config('paypal.client_secret'))
+        ];
+        $response = Http::withHeaders($headers)
+            ->withBody('grant_type=client_credentials')
+            ->post(config('paypal.base_url') . '/v1/oauth2/token');
+        return json_decode($response->body())->access_token;
     }
+    /**
+     * @return string
+     */
 
-    public function pay2(Request $request)
+    public function create(int $amount = 10): string
     {
-        $setting = Setting::find(1);
-        $confirm_price = $setting->main_price;
-        try {
-            $paypal_amount = round($confirm_price, '2');
-            $response = $this->geteway->purchase(array(
-                'amount' => $paypal_amount,
-                'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => url('success2'),
-                'cancelUrl' => url('error2'),
-            ))->send();
-            if ($response->isRedirect()) {
-                $response->redirect();
-            } else {
-                return $response->getMessage();
-            }
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
+        $id = uuid_create();
+
+        $headers = [
+            'Content-Type'      => 'application/json',
+            'Authorization'     => 'Bearer ' . $this->getAccessToken(),
+            'PayPal-Request-Id' => $id,
+        ];
+
+        $body = [
+            "intent"         => "CAPTURE",
+            "purchase_units" => [
+                [
+                    "reference_id" => $id,
+                    "amount"       => [
+                        "currency_code" => "GBP",
+                        "value"         => number_format($amount, 2),
+                    ]
+                ]
+            ]
+        ];
+
+        $response = Http::withHeaders($headers)
+            ->withBody(json_encode($body))
+            ->post(config('paypal.base_url'). '/v2/checkout/orders');
+
+        Session::put('request_id', $id);
+        Session::put('order_id', json_decode($response->body())->id);
+        return json_decode($response->body())->id;
     }
+    /**
+     * @return mixed
+     */
+//    public function complete()
+//    {
+//        $url = config('paypal.base_url') . '/v2/checkout/orders/' . Session::get('order_id') . '/capture';
+//        $headers = [
+//            'Content-Type'  => 'application/json',
+//            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+//        ];
+//
+//        $response = Http::withHeaders($headers)
+//            ->post($url, null);
+//        return json_decode($response->body());
+//    }
 
-    public function success(Request $request)
+    public function complete()
     {
-        if ($request->input('paymentId') && $request->input('PayerID')) {
-            $transaction = $this->geteway->completePurchase(array(
-                'payer_id' => $request->input('PayerID'),
-                'transactionReference' => $request->input('paymentId'),
-            ));
-            $response = $transaction->send();
-            if ($response->isSuccessful()) {
-                $session_id = Session::getId();
-                $arr = $response->getData();
-                $payment = new Payment();
-                $payment->booking_id = Session::get('booking_id');
-                $payment->user_session = $session_id;
-                $payment->payment_id = $arr['id'];
-                $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
-                $payment->payer_email = $arr['payer']['payer_info']['email'];
-                $payment->amount = $arr['transactions'][0]['amount']['total'];
-                $payment->currency = env('PAYPAL_CURRENCY');
-                $payment->payment_status = $arr['state'];
-                $payment->save();
+        $url = config('paypal.base_url') . '/v2/checkout/orders/' . Session::get('order_id') . '/capture';
+        $headers = [
+            'Content-Type'  => 'application/json',
+            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+        ];
 
-                ////////// Update Order Status
-                ///
-                $booking_id = Session::get('booking_id');
-                //////// Update Order Status To Paid
-                ///
-                Booking::where('id', $booking_id)->update(['payment_status' => ' تم الدفع وتاكيد الحجز  ']);
-                return view('front.payment.success-booking');
-                //return "Payment Is Success. Your Transation Is" . $arr['id'];
-            } else {
-                //  return $response->getMessage();
-                return view('front.payment.error-booking');
-            }
+        $response = Http::withHeaders($headers)
+            ->post($url, null);
+        $order_details = json_decode($response->body(), true);
+        if (isset($order_details['status']) && $order_details['status'] === 'COMPLETED') {
+            // تحديث حالة الحجز
+
+            $booking_id = Session::get('booking_id');
+            Booking::where('id', $booking_id)->update(['payment_status' => 'تم الدفع وتأكيد الحجز']);
+            return $order_details;
+            // الدفع ناجح
+            $payment = new Payment();
+            $payment->booking_id = Session::get('booking_id');
+            $payment->user_session = session()->getId();
+            $payment->payment_id = $order_details['id'];
+            $payment->payer_id = $order_details['payer']['payer_id'] ?? null;
+            $payment->payer_email = $order_details['payer']['email_address'] ?? null;
+            $payment->amount = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
+            $payment->currency = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
+            $payment->payment_status = $order_details['status'];
+            $payment->save();
+
+            // تحديث حالة الحجز
+            $booking_id = Session::get('booking_id');
+            Booking::where('id', $booking_id)->update(['payment_status' => 'تم الدفع وتأكيد الحجز']);
+
+            return response()->json(['status' => 'COMPLETED', 'message' => 'تم تأكيد الحجز بنجاح.']);
         } else {
-            return "Payment Declined";
+            // الدفع فشل
+            return response()->json(['status' => 'FAILED', 'message' => 'حدث خطأ أثناء الدفع.']);
         }
     }
 
 
-    public function success2(Request $request)
-    {
-        // dd(Session::get('booking_id'));
-        if ($request->input('paymentId') && $request->input('PayerID')) {
-            $transaction = $this->geteway->completePurchase(array(
-                'payer_id' => $request->input('PayerID'),
-                'transactionReference' => $request->input('paymentId'),
-            ));
-            $response = $transaction->send();
-            //dd($response);
-            if ($response->isSuccessful()) {
-                $session_id = Session::getId();
-                $arr = $response->getData();
-                $payment = new Payment2();
-                $payment->booking_id = Session::get('booking_id2');
-                $payment->user_session = $session_id;
-                $payment->payment_id = $arr['id'];
-                $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
-                $payment->payer_email = $arr['payer']['payer_info']['email'];
-                $payment->amount = $arr['transactions'][0]['amount']['total'];
-                $payment->currency = env('PAYPAL_CURRENCY');
-                $payment->payment_status = $arr['state'];
-                $payment->save();
 
-                ////////// Update Order Status
-                ///
-                $booking_id2 = Session::get('booking_id2');
-                //////// Update Order Status To Paid
-                ///
-                ServiveBooking::where('id', $booking_id2)->update(['payment_status' => ' تم الدفع وتاكيد الحجز  ']);
-                return view('front.payment.success-booking2');
-                //return "Payment Is Success. Your Transation Is" . $arr['id'];
-            } else {
-                //  return $response->getMessage();
-                return view('front.payment.error-booking2');
-            }
-        } else {
-            return "Payment Declined";
-        }
-    }
-
-    public function errorPayment()
-    {
-        return view('front.payment.error-booking');
-    }
 }

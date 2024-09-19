@@ -39,7 +39,7 @@
                                 <div class="card-content-bottom">
                                     <div class="price-area">
                                         <h6> السعر يبدا من : </h6>
-                                        <span> $ {{number_format($serv['price'],2)}}</span>
+                                        <span>   {{number_format($serv['price'],2)}}  £  </span>
 
                                     </div>
                                     <a href="{{url('service/'.$serv['slug'])}}" class="primary-btn2"> احجز الان

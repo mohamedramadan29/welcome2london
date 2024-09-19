@@ -301,7 +301,7 @@
                                                 <div class="card-content-bottom">
                                                     <div class="price-area">
                                                         <span class="title"> السعر يبدا من :   </span>
-                                                        <h6><sub>$</sub>  {{number_format($serv['price'],2)}}
+                                                        <h6>  {{number_format($serv['price'],2)}} <sub> £ </sub>
 {{--                                                            <del>$100.00</del>--}}
                                                         </h6>
                                                     </div>
