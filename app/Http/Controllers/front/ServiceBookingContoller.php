@@ -89,7 +89,7 @@ class ServiceBookingContoller extends Controller
             $booking->user_session=  $session_id;
             $booking->serv_id=$data['serv_id'];
             $booking->serv_name=$data['serv_name'];
-            $booking->payment_status = ' لم يتم تاكيد الحجز  ';
+            $booking->payment_status = ' تم الحجز بنجاح  ';
             $booking->save();
 
             //Send Mail To Admin
@@ -108,8 +108,8 @@ class ServiceBookingContoller extends Controller
             Mail::send('front.mails.NotifiServBooking', $MessageDate, function ($message) use ($email) {
                 $message->to($email)->subject(' حجز جديد   ');
             });
-            $booking_id = $booking->id;
-            return Redirect::to('booking-confirm2/'.$booking_id)->with(['booking_id' => $booking_id, 'Success_message' => 'تم ارسال الحجز بنجاح من فضلك اكد طلبك الان']);
+            return $this->success_message(' تم تاكيد الحجز الخاص بك بنجاح  ');
+            //return Redirect::to('booking-confirm2/'.$booking_id)->with(['booking_id' => $booking_id, 'Success_message' => 'تم ارسال الحجز بنجاح من فضلك اكد طلبك الان']);
             // return $this->success_message(' تم ارسال الحجز بنجاح ');
         } catch (\Exception $e) {
             return $this->exception_message($e);

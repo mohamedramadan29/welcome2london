@@ -88,7 +88,7 @@ class FrontController extends Controller
             $booking->notes=$data['notes'];
             $booking->user_session=  $session_id;
             $booking->num_pages=$data['num_pages'];
-            $booking->payment_status = ' لم يتم تاكيد الحجز  ';
+            $booking->payment_status = ' تم تاكيد الحجز  ';
             $booking->save();
 
             //Send Mail To Admin
@@ -118,8 +118,8 @@ class FrontController extends Controller
 
             $booking_id = $booking->id;
 
-            return Redirect::to('booking-confirm/'.$booking_id)->with(['booking_id' => $booking_id, 'confirm_price' => $confirm_price, 'Success_message' => 'تم ارسال الحجز بنجاح من فضلك اكد طلبك الان']);
-            // return $this->success_message(' تم ارسال الحجز بنجاح ');
+           // return Redirect::to('booking-confirm/'.$booking_id)->with(['booking_id' => $booking_id, 'confirm_price' => $confirm_price, 'Success_message' => 'تم ارسال الحجز بنجاح من فضلك اكد طلبك الان']);
+            return $this->success_message(' تم الحجز بنجاح  ');
         }
         return view('front.booking');
     }

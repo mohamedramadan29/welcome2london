@@ -87,28 +87,25 @@ class PaypalController extends Controller
             ->post($url, null);
         $order_details = json_decode($response->body(), true);
         if (isset($order_details['status']) && $order_details['status'] === 'COMPLETED') {
-            // تحديث حالة الحجز
-
-            $booking_id = Session::get('booking_id');
-            Booking::where('id', $booking_id)->update(['payment_status' => 'تم الدفع وتأكيد الحجز']);
+            // تحديث حالة الحج
             return $order_details;
             // الدفع ناجح
-            $payment = new Payment();
-            $payment->booking_id = Session::get('booking_id');
-            $payment->user_session = session()->getId();
-            $payment->payment_id = $order_details['id'];
-            $payment->payer_id = $order_details['payer']['payer_id'] ?? null;
-            $payment->payer_email = $order_details['payer']['email_address'] ?? null;
-            $payment->amount = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
-            $payment->currency = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
-            $payment->payment_status = $order_details['status'];
-            $payment->save();
+//            $payment = new Payment();
+//            $payment->booking_id = Session::get('booking_id');
+//            $payment->user_session = session()->getId();
+//            $payment->payment_id = $order_details['id'];
+//            $payment->payer_id = $order_details['payer']['payer_id'] ?? null;
+//            $payment->payer_email = $order_details['payer']['email_address'] ?? null;
+//            $payment->amount = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
+//            $payment->currency = $order_details['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
+//            $payment->payment_status = $order_details['status'];
+//            $payment->save();
 
             // تحديث حالة الحجز
-            $booking_id = Session::get('booking_id');
-            Booking::where('id', $booking_id)->update(['payment_status' => 'تم الدفع وتأكيد الحجز']);
+//            $booking_id = Session::get('booking_id');
+//            Booking::where('id', $booking_id)->update(['payment_status' => 'تم الدفع وتأكيد الحجز']);
 
-            return response()->json(['status' => 'COMPLETED', 'message' => 'تم تأكيد الحجز بنجاح.']);
+           // return response()->json(['status' => 'COMPLETED', 'message' => 'تم تأكيد الحجز بنجاح.']);
         } else {
             // الدفع فشل
             return response()->json(['status' => 'FAILED', 'message' => 'حدث خطأ أثناء الدفع.']);
