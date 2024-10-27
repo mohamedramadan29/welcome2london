@@ -32,6 +32,10 @@
                 </ul>
             </div>
         @endif
+
+            @php
+                $setting = \App\Models\admin\PublicSetting::first();
+            @endphp
         <div class="row g-lg-4 gy-5">
             <div class="col-lg-5">
                 <div class="single-contact mb-40">
@@ -49,8 +53,8 @@
                         </svg>
                     </div>
                     <div class="content">
-                        <h6><a href="tel:">+990-737 621 432</a></h6>
-                        <h6><a href="tel:">+990-737 621 432</a></h6>
+                        <h6><a href="tel:{{$setting['phone']}}">{{$setting['phone']}}</a></h6>
+
                     </div>
                 </div>
                 <div class="single-contact mb-40">
@@ -65,13 +69,10 @@
                     </div>
                     <div class="content">
                         <h6>
-                            <a href="https://demo-egenslab.b-cdn.net/cdn-cgi/l/email-protection#93fafdf5fcd3f6ebf2fee3fff6bdf0fcfe"><span
-                                    class="__cf_email__" data-cfemail="7d14131b123d18051c100d1118531e1210">[email&#160;protected]</span></a>
+                            <a href="mailto::{{$setting['phone']}}"><span
+                                    class="__cf_email__" data-cfemail="7d14131b123d18051c100d1118531e1210"> {{$setting['email']}}</span></a>
                         </h6>
-                        <h6>
-                            <a href="https://demo-egenslab.b-cdn.net/cdn-cgi/l/email-protection#aecbd6cfc3dec2cbeecbd6cfc3dec2cb80cdc1c3"><span
-                                    class="__cf_email__" data-cfemail="f6938e979b869a93b6938e979b869a93d895999b">[email&#160;protected]</span></a>
-                        </h6>
+
                     </div>
                 </div>
                 <div class="single-contact mb-40">
@@ -87,8 +88,7 @@
                         </svg>
                     </div>
                     <div class="content">
-                        <h6><a href="#">168/170, Avenue 01, Old York
-                                Drive Rich Mirpur DOHS, Bangladesh</a></h6>
+                        <h6><a href="#"> {{$setting['address']}} </a></h6>
                     </div>
                 </div>
                 <div class="single-contact">
@@ -117,7 +117,7 @@
 </svg>
                     </div>
                     <div class="content">
-                        <h6><a href="#">8:00Am - 10:Pm, Friday Close</a></h6>
+                        <h6><a href="#"> {{$setting['work_time']}} </a></h6>
                     </div>
                 </div>
             </div>
@@ -168,9 +168,8 @@
 </div>
 
 <div class="contact-map">
-    <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.5647631857846!2d90.36311167605992!3d23.83407118555764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c14c8682a473%3A0xa6c74743d52adb88!2sEgens%20Lab!5e0!3m2!1sen!2sbd!4v1700138349574!5m2!1sen!2sbd"
-        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317727.9061302593!2d0.5221744619772866!3d51.52698776379547!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2z2YTZhtiv2YbYjCDYp9mE2YXZhdmE2YPYqSDYp9mE2YXYqtit2K_YqQ!5e0!3m2!1sar!2seg!4v1730051974982!5m2!1sar!2seg"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 
 @endsection

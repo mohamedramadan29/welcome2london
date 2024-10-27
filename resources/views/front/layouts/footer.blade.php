@@ -44,14 +44,17 @@
         </div>
         <div class="footer-bottom">
             <div class="row">
+                @php
+                    $setting = \App\Models\admin\PublicSetting::first();
+                @endphp
                 <div
                     class="col-lg-12 d-flex flex-md-row flex-column align-items-center justify-content-md-between justify-content-center flex-wrap gap-3">
                     <ul class="social-list">
                         <li>
-                            <a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a>
+                            <a href="{{$setting['facebook_link']}}"><i class="bx bxl-facebook"></i></a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/">
+                            <a href="{{$setting['twitter_link']}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
                                      class="bi bi-twitter-x" viewBox="0 0 16 16">
                                     <path
@@ -59,11 +62,9 @@
                                 </svg>
                             </a>
                         </li>
+
                         <li>
-                            <a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a>
+                            <a href="{{$setting['tiktok_link']}}"><i class="bx bxl-tiktok"></i></a>
                         </li>
                     </ul>
                     <p>    جميع الحقوق محفوظة | بواسطة  <a href="https://www.egenslab.com/"> Mr </a></p>

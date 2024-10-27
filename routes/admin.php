@@ -6,6 +6,7 @@ use \App\Http\Controllers\admin\ServiceController;
 use \App\Http\Controllers\admin\BookingController;
 use \App\Http\Controllers\front\ServiceBookingContoller;
 use \App\Http\Controllers\admin\TestmonailController;
+use \App\Models\admin\PublicSetting;
 Route::get('/admin', [AdminController::class, 'index'])->name('login');
 Route::group(['prefix' => 'admin'], function () {
     // Admin Login
@@ -76,6 +77,13 @@ Route::group(['prefix' => 'admin'], function () {
             Route::match(['post', 'get'], 'faq/store', 'store');
             Route::match(['post', 'get'], 'faq/update/{id}', 'update');
             Route::post('faq/delete/{id}', 'delete');
+        });
+
+        /////////////// start Public Settings
+        ///
+        Route::controller( \App\Http\Controllers\admin\PublicSettingController::class)->group(function (){
+            Route::get('public_setting','index');
+            Route::post('public_setting/update','update');
         });
 
 
