@@ -117,12 +117,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-inner">
-{{--                                        <button  class="primary-btn1 btn-hover" type="submit">--}}
-{{--                                           احجز الان--}}
-{{--                                        </button>--}}
-                                        <div class="row mt-3">
-                                            <div class="col-12 col-lg-6 offset-lg-3" id="payment_options"></div>
-                                        </div>
+                                        <button  class="primary-btn1 btn-hover" type="submit">
+                                           احجز الان
+                                        </button>
+{{--                                        <div class="row mt-3">--}}
+{{--                                            <div class="col-12 col-lg-6 offset-lg-3" id="payment_options"></div>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
